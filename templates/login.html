@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Вход - Auto Premium{% endblock %}
+
+{% block content %}
+<section class="auth section">
+    <div class="container">
+        <div class="auth__card">
+            <div class="auth__header">
+                <i class="fas fa-user-circle auth__icon"></i>
+                <h1 class="auth__title">Вход в аккаунт</h1>
+                <p class="auth__subtitle">Войдите, чтобы получить доступ к личному кабинету</p>
+            </div>
+            <form method="POST" class="auth__form">
+                {% csrf_token %}
+                <div class="form__group">
+                    <label class="form__label">Телефон / Email</label>
+                    <input type="text" name="login_input" class="form__input form__input--lg" required placeholder="Введите телефон или email">
+                </div>
+                <div class="form__group">
+                    <label class="form__label">Пароль</label>
+                    <div class="password-wrapper">
+                        <input type="password" name="password" class="form__input form__input--lg" required placeholder="Введите пароль" id="loginPassword">
+                        <button type="button" class="password-toggle" id="passwordToggle" tabindex="-1">
+                            <i class="fas fa-eye" id="passwordIcon"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="auth__forgot">
+                    <a href="{% url 'password_reset' %}">Забыли пароль?</a>
+                </div>
+                <button type="submit" class="btn btn--primary btn--lg form__submit">Войти</button>
+            </form>
+            <div class="auth__social">
+                <p class="auth__social-text">Войти через</p>
+                <div class="auth__social-buttons">
+                    <a href="#" class="social-btn social-btn--vk">
+                        <i class="fab fa-vk"></i>
+                    </a>
+                    <a href="#" class="social-btn social-btn--google">
+                        <i class="fab fa-google"></i>
+                    </a>
+                    <a href="#" class="social-btn social-btn--apple">
+                        <i class="fab fa-apple"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="auth__footer">
+                <p>Нет аккаунта? <a href="{% url 'register' %}">Зарегистрироваться</a></p>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

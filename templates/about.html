@@ -1,0 +1,125 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}О компании - Auto Premium{% endblock %}
+
+<!-- ============================================================ -->
+<!-- КУДА ВСТАВЛЯТЬ ФОТО АВТОМОБИЛЕЙ:                            -->
+<!-- Создайте папку: media/cars/                                   -->
+<!-- Файлы именовать как:                                          -->
+<!--   media/cars/toyota_landcruiser300.jpg (Land Cruiser 300)     -->
+<!--   media/cars/toyota_gr86.jpg        (GR86)                    -->
+<!--   media/cars/toyota_crown.jpg       (Crown)                   -->
+<!--   media/cars/toyota_bz3x.jpg        (bZ3X)                    -->
+<!--   media/cars/toyota_hilux.jpg       (Hilux)                   -->
+<!--   media/cars/toyota_rav4.jpg        (RAV4)                    -->
+<!--   media/cars/toyota_raize.jpg       (Raize)                   -->
+<!--   media/cars/toyota_camry.jpg       (Camry)                   -->
+<!--   media/cars/toyota_corolla.jpg     (Corolla)                 -->
+<!--   media/cars/toyota_fortuner.jpg    (Fortuner)                -->
+<!-- ============================================================ -->
+
+{% block content %}
+<section class="page-header">
+    <div class="container">
+        <h1 class="page-header__title">О компании</h1>
+        <p class="page-header__subtitle">Auto Premium - ваш надежный партнер в мире автомобильных консультаций</p>
+    </div>
+</section>
+
+<section class="about section">
+    <div class="container">
+        <div class="about__grid">
+            <div class="about__content">
+                <h2>О нас</h2>
+                <p>Auto Premium — это современный консультационный центр, специализирующийся на автомобилях марки Toyota. Мы работаем на рынке более 15 лет и за это время заслужили доверие тысяч клиентов.</p>
+                <p>Наша миссия — предоставить клиентам максимально полную и объективную информацию об автомобилях, помочь с выбором и ответить на все вопросы.</p>
+            </div>
+            <div class="about__stats">
+                <div class="about__stat">
+                    <div class="about__stat-number">15+</div>
+                    <div class="about__stat-label">Лет на рынке</div>
+                </div>
+                <div class="about__stat">
+                    <div class="about__stat-number">5000+</div>
+                    <div class="about__stat-label">Проконсультировано</div>
+                </div>
+                <div class="about__stat">
+                    <div class="about__stat-number">98%</div>
+                    <div class="about__stat-label">Довольных клиентов</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="about__advantages">
+            <h2>Наши преимущества</h2>
+            <div class="advantages-grid">
+                <div class="advantage-card">
+                    <i class="fas fa-check-circle"></i>
+                    <h3>Экспертный подход</h3>
+                    <p>Глубокое знание каждой модели Toyota</p>
+                </div>
+                <div class="advantage-card">
+                    <i class="fas fa-chart-line"></i>
+                    <h3>Анализ рынка</h3>
+                    <p>Актуальная информация о ценах и комплектациях</p>
+                </div>
+                <div class="advantage-card">
+                    <i class="fas fa-headset"></i>
+                    <h3>Поддержка 24/7</h3>
+                    <p>Наши эксперты всегда готовы помочь вам</p>
+                </div>
+                <div class="advantage-card">
+                    <i class="fas fa-clipboard-check"></i>
+                    <h3>Проверка авто</h3>
+                    <p>Поможем проверить историю и состояние автомобиля</p>
+                </div>
+                <div class="advantage-card">
+                    <i class="fas fa-file-signature"></i>
+                    <h3>Помощь с документами</h3>
+                    <p>Консультация по оформлению документов</p>
+                </div>
+                <div class="advantage-card">
+                    <i class="fas fa-car"></i>
+                    <h3>Тест-драйв</h3>
+                    <p>Организуем тест-драйв у официальных дилеров</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="about__history">
+            <h2>История компании</h2>
+            <div class="history-timeline">
+                <div class="history-item">
+                    <div class="history-item__year">2009</div>
+                    <div class="history-item__content">
+                        <h4>Основание компании</h4>
+                        <p>Auto Premium начал свою деятельность с небольшого автосалона в Москве</p>
+                    </div>
+                </div>
+                <div class="history-item">
+                    <div class="history-item__year">2014</div>
+                    <div class="history-item__content">
+                        <h4>Расширение</h4>
+                        <p>Открытие второго автосалона и расширение модельного ряда</p>
+                    </div>
+                </div>
+                <div class="history-item">
+                    <div class="history-item__year">2018</div>
+                    <div class="history-item__content">
+                        <h4>Лидер рынка</h4>
+                        <p>Auto Premium вошел в топ-10 автосалонов Москвы</p>
+                    </div>
+                </div>
+                <div class="history-item">
+                    <div class="history-item__year">2024</div>
+                    <div class="history-item__content">
+                        <h4>Новый формат</h4>
+                        <p>Запуск онлайн-платформы для удобного выбора и покупки автомобилей</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Регистрация - Auto Premium{% endblock %}
+
+{% block content %}
+<section class="auth section">
+    <div class="container">
+        <div class="auth__card">
+            <div class="auth__header">
+                <i class="fas fa-user-plus auth__icon"></i>
+                <h1 class="auth__title">Регистрация</h1>
+                <p class="auth__subtitle">Создайте аккаунт для получения полного доступа к сервисам</p>
+            </div>
+            <form method="POST" class="auth__form">
+                {% csrf_token %}
+                <div class="form__row">
+                    <div class="form__group">
+                        <label class="form__label">Фамилия</label>
+                        <input type="text" name="last_name" class="form__input form__input--lg" required placeholder="Иванов">
+                    </div>
+                    <div class="form__group">
+                        <label class="form__label">Имя</label>
+                        <input type="text" name="first_name" class="form__input form__input--lg" required placeholder="Иван">
+                    </div>
+                </div>
+                <div class="form__group">
+                    <label class="form__label">Телефон</label>
+                    <input type="tel" name="phone" class="form__input form__input--lg" required placeholder="+7 (___) ___-__-__">
+                </div>
+                <div class="form__group">
+                    <label class="form__label">Email</label>
+                    <input type="email" name="email" class="form__input form__input--lg" required placeholder="example@mail.ru">
+                </div>
+                <div class="form__group">
+                    <label class="form__label">Пароль</label>
+                    <div class="password-wrapper">
+                        <input type="password" name="password1" class="form__input form__input--lg" required placeholder="Придумайте пароль" id="regPassword1">
+                    </div>
+                </div>
+                <div class="form__group">
+                    <label class="form__label">Подтверждение пароля</label>
+                    <div class="password-wrapper">
+                        <input type="password" name="password2" class="form__input form__input--lg" required placeholder="Повторите пароль" id="regPassword2">
+                    </div>
+                </div>
+                <button type="submit" class="btn btn--primary btn--lg form__submit">Зарегистрироваться</button>
+            </form>
+            <div class="auth__footer">
+                <p>Уже есть аккаунт? <a href="{% url 'login' %}">Войти</a></p>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

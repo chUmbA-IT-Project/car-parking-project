@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Настройки профиля - Auto Premium{% endblock %}
+
+{% block content %}
+<section class="profile-settings section">
+    <div class="container">
+        <div class="settings-card">
+            <h1 class="settings-card__title">Настройки профиля</h1>
+            <form method="POST" enctype="multipart/form-data" class="settings-form">
+                {% csrf_token %}
+                <div class="form__group">
+                    <label class="form__label">Аватар</label>
+                    <div class="form__avatar">
+                        {% if user.profile.avatar %}
+                        <img src="{{ user.profile.avatar.url }}" alt="{{ user.username }}">
+                        {% else %}
+                        <i class="fas fa-user-circle"></i>
+                        {% endif %}
+                        <input type="file" name="avatar" accept="image/*" class="form__file">
+                    </div>
+                </div>
+                <div class="form__group">
+                    <label class="form__label">Имя</label>
+                    <input type="text" name="first_name" class="form__input" value="{{ user.first_name }}" placeholder="Введите имя">
+                </div>
+                <div class="form__group">
+                    <label class="form__label">Фамилия</label>
+                    <input type="text" name="last_name" class="form__input" value="{{ user.last_name }}" placeholder="Введите фамилию">
+                </div>
+                <div class="form__group">
+                    <label class="form__label">Email</label>
+                    <input type="email" name="email" class="form__input" value="{{ user.email }}" placeholder="example@mail.ru">
+                </div>
+                <div class="form__group">
+                    <label class="form__label">Телефон</label>
+                    <input type="tel" name="phone" class="form__input" value="{{ user.profile.phone }}" placeholder="+7 (___) ___-__-__">
+                </div>
+                <button type="submit" class="btn btn--primary btn--lg form__submit">Сохранить изменения</button>
+            </form>
+        </div>
+    </div>
+</section>
+{% endblock %}

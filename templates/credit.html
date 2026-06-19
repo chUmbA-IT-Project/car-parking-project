@@ -1,0 +1,100 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Автокредит - Auto Premium{% endblock %}
+
+{% block content %}
+<section class="page-header">
+    <div class="container">
+        <h1 class="page-header__title">Автокредит</h1>
+        <p class="page-header__subtitle">Выгодные условия кредитования от ведущих банков</p>
+    </div>
+</section>
+
+<section class="credit-info section">
+    <div class="container">
+        <div class="credit-info__grid">
+            <div class="credit-info__benefits">
+                <h2>Преимущества автокредита в Auto Premium</h2>
+                <div class="benefits-list">
+                    <div class="benefits-list__item">
+                        <i class="fas fa-percent"></i>
+                        <div>
+                            <h4>Ставка от 3.9%</h4>
+                            <p>Минимальная годовая ставка при первом взносе от 50%</p>
+                        </div>
+                    </div>
+                    <div class="benefits-list__item">
+                        <i class="fas fa-clock"></i>
+                        <div>
+                            <h4>Срок до 84 месяцев</h4>
+                            <p>Гибкие условия кредитования на срок до 7 лет</p>
+                        </div>
+                    </div>
+                    <div class="benefits-list__item">
+                        <i class="fas fa-file-alt"></i>
+                        <div>
+                            <h4>Минимум документов</h4>
+                            <p>Для оформления нужен только паспорт</p>
+                        </div>
+                    </div>
+                    <div class="benefits-list__item">
+                        <i class="fas fa-check-circle"></i>
+                        <div>
+                            <h4>Быстрое одобрение</h4>
+                            <p>Решение по заявке в течение 30 минут</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="credit-info__form">
+                <h2>Оформить заявку</h2>
+                <form method="POST" class="credit-form">
+                    {% csrf_token %}
+                    <div class="form__group">
+                        <label class="form__label">ФИО</label>
+                        <input type="text" name="full_name" class="form__input" required placeholder="Иванов Иван Иванович">
+                    </div>
+                    <div class="form__group">
+                        <label class="form__label">Телефон</label>
+                        <input type="tel" name="phone" class="form__input" required placeholder="+7 (___) ___-__-__">
+                    </div>
+                    <div class="form__group">
+                        <label class="form__label">Email</label>
+                        <input type="email" name="email" class="form__input" required placeholder="example@mail.ru">
+                    </div>
+                    <div class="form__group">
+                        <label class="form__label">Интересуемый автомобиль</label>
+                        <input type="text" name="car_interest" class="form__input" placeholder="Toyota Camry, Volkswagen Polo...">
+                    </div>
+                    <div class="form__row">
+                        <div class="form__group">
+                            <label class="form__label">Сумма кредита</label>
+                            <input type="number" name="loan_amount" class="form__input" required placeholder="1 000 000">
+                        </div>
+                        <div class="form__group">
+                            <label class="form__label">Первоначальный взнос</label>
+                            <input type="number" name="initial_payment" class="form__input" required placeholder="200 000">
+                        </div>
+                    </div>
+                    <div class="form__group">
+                        <label class="form__label">Срок (месяцев)</label>
+                        <select name="term_months" class="form__input" required>
+                            <option value="">Выберите срок</option>
+                            <option value="12">12 месяцев</option>
+                            <option value="24">24 месяца</option>
+                            <option value="36">36 месяцев</option>
+                            <option value="48">48 месяцев</option>
+                            <option value="60">60 месяцев</option>
+                            <option value="72">72 месяца</option>
+                            <option value="84">84 месяца</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn--primary btn--lg form__submit">Отправить заявку</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

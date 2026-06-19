@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Контакты - Auto Premium{% endblock %}
+
+{% block content %}
+<section class="page-header">
+    <div class="container">
+        <h1 class="page-header__title">Контакты</h1>
+        <p class="page-header__subtitle">Свяжитесь с нами удобным для вас способом</p>
+    </div>
+</section>
+
+<section class="contacts section">
+    <div class="container">
+        <div class="contacts__grid">
+            <div class="contacts__info">
+                <div class="contact-card">
+                    <i class="fas fa-phone contact-card__icon"></i>
+                    <h3>Телефон</h3>
+                    <p>+7 (916) 580-88-11</p>
+                </div>
+                <div class="contact-card">
+                    <i class="fas fa-envelope contact-card__icon"></i>
+                    <h3>Email</h3>
+                    <p>info@autopremium.ru</p>
+                    <p>sales@autopremium.ru</p>
+                </div>
+                <div class="contact-card">
+                    <i class="fas fa-map-marker-alt contact-card__icon"></i>
+                    <h3>Адрес</h3>
+                    <p>г. Москва, ул. Автомобильная, д. 1</p>
+                    <p>БЦ "Автоград", 1 этаж</p>
+                </div>
+                <div class="contact-card">
+                    <i class="fas fa-clock contact-card__icon"></i>
+                    <h3>Время работы</h3>
+                    <p>Пн-Пт: 9:00 - 21:00</p>
+                    <p>Сб: 10:00 - 20:00</p>
+                    <p>Вс: 10:00 - 18:00</p>
+                </div>
+            </div>
+
+            <div class="contacts__form">
+                <h2>Обратная связь</h2>
+                <form method="POST" class="contact-form">
+                    {% csrf_token %}
+                    <div class="form__group">
+                        <label class="form__label">Ваше имя</label>
+                        <input type="text" name="name" class="form__input" required placeholder="Введите ваше имя">
+                    </div>
+                    <div class="form__group">
+                        <label class="form__label">Телефон</label>
+                        <input type="tel" name="phone" class="form__input" required placeholder="+7 (___) ___-__-__">
+                    </div>
+                    <div class="form__group">
+                        <label class="form__label">Email</label>
+                        <input type="email" name="email" class="form__input" placeholder="example@mail.ru">
+                    </div>
+                    <div class="form__group">
+                        <label class="form__label">Сообщение</label>
+                        <textarea name="message" class="form__textarea" rows="5" placeholder="Введите ваше сообщение"></textarea>
+                    </div>
+                    <button type="submit" class="btn btn--primary btn--lg form__submit">Отправить</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

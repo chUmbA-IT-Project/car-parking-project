@@ -1,0 +1,151 @@
+{% load static %}
+<!-- ===================================================================== -->
+<!-- 📁 КУДА ВСТАВЛЯТЬ ФОТО АВТОМОБИЛЕЙ (папка media/cars/):              -->
+<!--                                                                       -->
+<!--   toyota_landcruiser300.jpg  — Toyota Land Cruiser 300                -->
+<!--   toyota_gr86.jpg            — Toyota GR86                            -->
+<!--   toyota_crown.jpg           — Toyota Crown                           -->
+<!--   toyota_bz3x.jpg            — Toyota bZ3X                            -->
+<!--   toyota_hilux.jpg           — Toyota Hilux                           -->
+<!--   toyota_rav4.jpg            — Toyota RAV4                            -->
+<!--   toyota_raize.jpg           — Toyota Raize                           -->
+<!--   toyota_camry.jpg           — Toyota Camry                           -->
+<!--   toyota_corolla.jpg         — Toyota Corolla                         -->
+<!--   toyota_fortuner.jpg        — Toyota Fortuner                        -->
+<!--                                                                       -->
+<!-- Каждая модель использует ОДНО фото (все 2-3 экземпляра одной модели  -->
+<!-- разделяют общую картинку). Для разных фото на каждый экземпляр        -->
+<!-- загружайте через Админку → Автомобили → изменить.                    -->
+<!-- ===================================================================== -->
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Auto Premium - Автосалон{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header__inner">
+                <a href="{% url 'home' %}" class="logo">
+                    <i class="fas fa-car logo__icon"></i>
+                    <span class="logo__text">Auto <span class="logo__accent">Premium</span></span>
+                </a>
+                <nav class="nav">
+                    <a href="{% url 'models_list' %}" class="nav__link">Модели</a>
+                    <a href="{% url 'available_cars' %}" class="nav__link">В наличии</a>
+                    <a href="{% url 'contacts' %}" class="nav__link">Контакты</a>
+                    <a href="{% url 'about' %}" class="nav__link">О компании</a>
+                </nav>
+                <div class="header__actions">
+                    {% if user.is_authenticated %}
+                        <a href="{% url 'notifications' %}" class="btn btn--profile">
+                            <i class="fas fa-bell"></i>
+                        </a>
+                        <a href="{% url 'profile' %}" class="btn btn--profile">
+                            <i class="fas fa-user"></i>
+                            <span>{{ user.first_name|default:user.username }}</span>
+                        </a>
+                        <a href="{% url 'logout' %}" class="btn btn--outline">Выйти</a>
+                    {% else %}
+                        <a href="{% url 'login' %}" class="btn btn--primary">Вход/Регистрация</a>
+                    {% endif %}
+                </div>
+                <button class="burger" id="burgerBtn">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu" id="mobileMenu">
+        <nav class="mobile-menu__nav">
+            <a href="{% url 'models_list' %}" class="mobile-menu__link">Модели</a>
+            <a href="{% url 'available_cars' %}" class="mobile-menu__link">В наличии</a>
+            <a href="{% url 'contacts' %}" class="mobile-menu__link">Контакты</a>
+            <a href="{% url 'about' %}" class="mobile-menu__link">О компании</a>
+            {% if user.is_authenticated %}
+                <a href="{% url 'notifications' %}" class="mobile-menu__link">Уведомления</a>
+                <a href="{% url 'profile' %}" class="mobile-menu__link">Личный кабинет</a>
+                <a href="{% url 'logout' %}" class="mobile-menu__link mobile-menu__link--logout">Выйти</a>
+            {% else %}
+                <a href="{% url 'login' %}" class="mobile-menu__link mobile-menu__link--login">Вход/Регистрация</a>
+            {% endif %}
+        </nav>
+    </div>
+
+    <!-- Messages -->
+    {% if messages %}
+    <div class="messages">
+        <div class="container">
+            {% for message in messages %}
+            <div class="message message--{{ message.tags }}">
+                <span>{{ message }}</span>
+                <button class="message__close">&times;</button>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    {% endif %}
+
+    <!-- Main Content -->
+    <main class="main">
+        {% block content %}{% endblock %}
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer__grid">
+                <div class="footer__col">
+                    <div class="footer__logo">
+                        <i class="fas fa-car"></i>
+                        <span>Auto Premium</span>
+                    </div>
+                    <p class="footer__desc">
+                        Ваш надежный партнер в мире автомобильных консультаций. Более 10 лет на рынке, тысячи довольных клиентов.
+                    </p>
+                </div>
+                <div class="footer__col">
+                    <h4 class="footer__title">Разделы</h4>
+                    <ul class="footer__links">
+                        <li><a href="{% url 'models_list' %}">Модели</a></li>
+                        <li><a href="{% url 'available_cars' %}">В наличии</a></li>
+                        <li><a href="{% url 'contacts' %}">Контакты</a></li>
+                        <li><a href="{% url 'about' %}">О компании</a></li>
+                    </ul>
+                </div>
+                <div class="footer__col">
+                    <h4 class="footer__title">Контакты</h4>
+                    <ul class="footer__contacts">
+                        <li><i class="fas fa-phone"></i> <span>+7 (916) 580-88-11</span></li>
+                        <li><i class="fas fa-envelope"></i> <span>info@autopremium.ru</span></li>
+                        <li><i class="fas fa-map-marker-alt"></i> <span>г. Москва, ул. Автомобильная, д. 1</span></li>
+                    </ul>
+                </div>
+                <div class="footer__col">
+                    <h4 class="footer__title">Часы работы</h4>
+                    <ul class="footer__hours">
+                        <li><span>Пн-Пт:</span> 9:00 - 21:00</li>
+                        <li><span>Сб:</span> 10:00 - 20:00</li>
+                        <li><span>Вс:</span> 10:00 - 18:00</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer__bottom">
+                <p>&copy; {% now "Y" %} Auto Premium. Все права защищены.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="{% static 'js/app.js' %}"></script>
+</body>
+</html>

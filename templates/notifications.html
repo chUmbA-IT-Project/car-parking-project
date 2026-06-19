@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Уведомления - Auto Premium{% endblock %}
+
+{% block content %}
+<section class="page-header">
+    <div class="container">
+        <h1 class="page-header__title">Уведомления</h1>
+        <p class="page-header__subtitle">Акции, бонусы и новости Auto Premium</p>
+    </div>
+</section>
+
+<section class="notifications section">
+    <div class="container">
+        {% if notifications %}
+            <div class="notifications__list">
+                {% for notif in notifications %}
+                <div class="notif-card {% if not notif.is_read %}notif-card--unread{% endif %}">
+                    <div class="notif-card__icon">
+                        {% if notif.notification_type == 'promo' %}
+                            <i class="fas fa-tags"></i>
+                        {% elif notif.notification_type == 'bonus' %}
+                            <i class="fas fa-gift"></i>
+                        {% elif notif.notification_type == 'info' %}
+                            <i class="fas fa-info-circle"></i>
+                        {% else %}
+                            <i class="fas fa-bell"></i>
+                        {% endif %}
+                    </div>
+                    <div class="notif-card__body">
+                        <div class="notif-card__header">
+                            <h3>{{ notif.title }}</h3>
+                            <span class="notif-card__date">{{ notif.created_at|date:"d.m.Y H:i" }}</span>
+                        </div>
+                        <p>{{ notif.message }}</p>
+                    </div>
+                    {% if not notif.is_read %}
+                    <form method="POST" class="notif-card__action">
+                        {% csrf_token %}
+                        <input type="hidden" name="notification_id" value="{{ notif.id }}">
+                        <input type="hidden" name="action" value="mark_read">
+                        <button type="submit" class="btn btn--outline btn--sm">Прочитано</button>
+                    </form>
+                    {% else %}
+                    <span class="notif-card__badge">Прочитано</span>
+                    {% endif %}
+                </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <div class="notifications__empty">
+                <i class="fas fa-bell-slash"></i>
+                <h3>Нет уведомлений</h3>
+                <p>Здесь будут появляться акции, бонусы и важные новости.</p>
+            </div>
+        {% endif %}
+    </div>
+</section>
+{% endblock %}

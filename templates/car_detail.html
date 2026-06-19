@@ -1,0 +1,96 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{{ car.brand }} {{ car.model }} {{ car.year }} - Auto Premium{% endblock %}
+
+<!-- ============================================================ -->
+<!-- КУДА ВСТАВЛЯТЬ ФОТО АВТОМОБИЛЕЙ:                            -->
+<!-- Создайте папку: media/cars/                                   -->
+<!-- Файлы именовать как:                                          -->
+<!--   media/cars/toyota_landcruiser300.jpg (Land Cruiser 300)     -->
+<!--   media/cars/toyota_gr86.jpg        (GR86)                    -->
+<!--   media/cars/toyota_crown.jpg       (Crown)                   -->
+<!--   media/cars/toyota_bz3x.jpg        (bZ3X)                    -->
+<!--   media/cars/toyota_hilux.jpg       (Hilux)                   -->
+<!--   media/cars/toyota_rav4.jpg        (RAV4)                    -->
+<!--   media/cars/toyota_raize.jpg       (Raize)                   -->
+<!--   media/cars/toyota_camry.jpg       (Camry)                   -->
+<!--   media/cars/toyota_corolla.jpg     (Corolla)                 -->
+<!--   media/cars/toyota_fortuner.jpg    (Fortuner)                -->
+<!-- ============================================================ -->
+
+{% block content %}
+<section class="car-detail section">
+    <div class="container">
+        <div class="car-detail__breadcrumbs">
+            <a href="{% url 'home' %}">Главная</a> / 
+            <a href="{% url 'models_list' %}">Модели</a> / 
+            <span>{{ car.brand }} {{ car.model }}</span>
+        </div>
+        
+        <div class="car-detail__header">
+            <h1 class="car-detail__title">{{ car.brand }} {{ car.model }}, {{ car.year }}</h1>
+            <div class="car-detail__price">{{ car.price|floatformat:0 }} ₽</div>
+        </div>
+
+        <div class="car-detail__grid">
+            <div class="car-detail__gallery">
+                {% if car.main_image %}
+                <img src="{{ car.main_image.url }}" alt="{{ car.brand }} {{ car.model }}" class="car-detail__main-img">
+                {% else %}
+                <div class="car-detail__placeholder">
+                    <i class="fas fa-car"></i>
+                </div>
+                {% endif %}
+            </div>
+            
+            <div class="car-detail__info">
+                <div class="car-detail__specs">
+                    <div class="car-detail__spec">
+                        <span class="car-detail__spec-label">Год выпуска</span>
+                        <span class="car-detail__spec-value">{{ car.year }}</span>
+                    </div>
+                    <div class="car-detail__spec">
+                        <span class="car-detail__spec-label">Пробег</span>
+                        <span class="car-detail__spec-value">{{ car.mileage|floatformat:0 }} км</span>
+                    </div>
+                    <div class="car-detail__spec">
+                        <span class="car-detail__spec-label">КПП</span>
+                        <span class="car-detail__spec-value">{{ car.get_transmission_display }}</span>
+                    </div>
+                    <div class="car-detail__spec">
+                        <span class="car-detail__spec-label">Привод</span>
+                        <span class="car-detail__spec-value">{{ car.get_drive_display }}</span>
+                    </div>
+                    <div class="car-detail__spec">
+                        <span class="car-detail__spec-label">Топливо</span>
+                        <span class="car-detail__spec-value">{{ car.get_fuel_display }}</span>
+                    </div>
+                    <div class="car-detail__spec">
+                        <span class="car-detail__spec-label">Объем двигателя</span>
+                        <span class="car-detail__spec-value">{{ car.engine_volume }} л</span>
+                    </div>
+                    <div class="car-detail__spec">
+                        <span class="car-detail__spec-label">Мощность</span>
+                        <span class="car-detail__spec-value">{{ car.power }} л.с.</span>
+                    </div>
+                    <div class="car-detail__spec">
+                        <span class="car-detail__spec-label">Цвет</span>
+                        <span class="car-detail__spec-value">{{ car.color }}</span>
+                    </div>
+                </div>
+
+                {% if car.description %}
+                <div class="car-detail__description">
+                    {{ car.description|linebreaks }}
+                </div>
+                {% endif %}
+
+                <div class="car-detail__actions">
+                    <a href="{% url 'contacts' %}" class="btn btn--primary btn--lg">Получить консультацию</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

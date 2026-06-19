@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Модели автомобилей - Auto Premium{% endblock %}
+
+{% block content %}
+<!-- ===================================================================== -->
+<!-- 📁 ФОТО ДЛЯ ЭТОЙ СТРАНИЦЫ (26 уникальных имён в media/cars/)         -->
+<!--                                                                       -->
+<!--   toyota_landcruiser300_1.jpg   toyota_landcruiser300_2.jpg   300_3   -->
+<!--   toyota_gr86_1.jpg             toyota_gr86_2.jpg                     -->
+<!--   toyota_crown_1.jpg            toyota_crown_2.jpg                    -->
+<!--   toyota_bz3x_1.jpg             toyota_bz3x_2.jpg                     -->
+<!--   toyota_hilux_1.jpg            toyota_hilux_2.jpg       hilux_3      -->
+<!--   toyota_rav4_1.jpg             toyota_rav4_2.jpg        rav4_3       -->
+<!--   toyota_raize_1.jpg            toyota_raize_2.jpg                    -->
+<!--   toyota_camry_1.jpg            toyota_camry_2.jpg       camry_3      -->
+<!--   toyota_corolla_1.jpg          toyota_corolla_2.jpg     corolla_3    -->
+<!--   toyota_fortuner_1.jpg         toyota_fortuner_2.jpg    fortuner_3   -->
+<!-- ===================================================================== -->
+<section class="page-header">
+    <div class="container">
+        <h1 class="page-header__title">Модели автомобилей</h1>
+        <p class="page-header__subtitle">Изучите наш каталог и найдите свой идеальный автомобиль</p>
+    </div>
+</section>
+
+<section class="catalog section">
+    <div class="container">
+        {% if brands %}
+        <div class="brands-filter">
+            {% for brand in brands %}
+            <a href="{% url 'available_cars' %}?brand={{ brand }}" class="brands-filter__item">
+                <span class="brands-filter__name">{{ brand }}</span>
+            </a>
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        <div class="cars-grid">
+            {% for car in cars %}
+            <div class="car-card">
+                <div class="car-card__image">
+                    {% if car.main_image %}
+                    <img src="{{ car.main_image.url }}" alt="{{ car.brand }} {{ car.model }}">
+                    {% else %}
+                    <div class="car-card__placeholder">
+                        <i class="fas fa-car"></i>
+                    </div>
+                    {% endif %}
+                    {% if car.is_new %}
+                    <span class="car-card__badge">Новинка</span>
+                    {% endif %}
+                </div>
+                <div class="car-card__body">
+                    <h3 class="car-card__title">{{ car.brand }} {{ car.model }}</h3>
+                    <p class="car-card__year">{{ car.year }} год</p>
+                    <div class="car-card__specs">
+                        <span><i class="fas fa-tachometer-alt"></i> {{ car.power }} л.с.</span>
+                        <span><i class="fas fa-gas-pump"></i> {{ car.get_fuel_display }}</span>
+                        <span><i class="fas fa-cogs"></i> {{ car.get_transmission_display }}</span>
+                    </div>
+                    <div class="car-card__price">
+                        <span class="car-card__price-value">{{ car.price|floatformat:0 }} ₽</span>
+                    </div>
+                    <a href="{% url 'car_detail' car.id %}" class="btn btn--primary car-card__btn">Подробнее</a>
+                </div>
+            </div>
+            {% empty %}
+            <div class="cars-grid__empty">
+                <i class="fas fa-car-side"></i>
+                <h3>Автомобили не найдены</h3>
+                <p>В данный момент нет доступных автомобилей</p>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endblock %}

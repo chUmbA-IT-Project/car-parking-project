@@ -1,0 +1,124 @@
+{% extends 'base.html' %}
+{% load static %}
+
+<!-- ===================================================================== -->
+<!-- 📁 ФОТО ДЛЯ ГЛАВНОЙ СТРАНИЦЫ (карусель, 5 базовых фото)              -->
+<!-- Поместите в папку media/cars/:                                         -->
+<!--                                                                       -->
+<!--   toyota_landcruiser300.jpg                                          -->
+<!--   toyota_gr86.jpg                                                    -->
+<!--   toyota_crown.jpg                                                   -->
+<!--   toyota_bz3x.jpg                                                    -->
+<!--   toyota_hilux.jpg                                                   -->
+<!--                                                                       -->
+<!-- 📁 ФОТО ДЛЯ СТРАНИЦ "МОДЕЛИ" И "В НАЛИЧИИ" (26 уникальных имён)      -->
+<!-- Поместите в папку media/cars/:                                         -->
+<!--                                                                       -->
+<!--   toyota_landcruiser300_1.jpg   toyota_landcruiser300_2.jpg   300_3   -->
+<!--   toyota_gr86_1.jpg             toyota_gr86_2.jpg                     -->
+<!--   toyota_crown_1.jpg            toyota_crown_2.jpg                    -->
+<!--   toyota_bz3x_1.jpg             toyota_bz3x_2.jpg                     -->
+<!--   toyota_hilux_1.jpg            toyota_hilux_2.jpg       hilux_3      -->
+<!--   toyota_rav4_1.jpg             toyota_rav4_2.jpg        rav4_3       -->
+<!--   toyota_raize_1.jpg            toyota_raize_2.jpg                    -->
+<!--   toyota_camry_1.jpg            toyota_camry_2.jpg       camry_3      -->
+<!--   toyota_corolla_1.jpg          toyota_corolla_2.jpg     corolla_3    -->
+<!--   toyota_fortuner_1.jpg         toyota_fortuner_2.jpg    fortuner_3   -->
+<!-- ===================================================================== -->
+
+{% block title %}Auto Premium - Консультационный центр по автомобилям{% endblock %}
+
+{% block content %}
+<!-- Hero Section with Carousel -->
+<section class="hero">
+    <div class="hero__carousel" id="heroCarousel">
+        {% if carousel_cars %}
+            {% for car in carousel_cars %}
+            <div class="hero__slide {% if forloop.first %}active{% endif %}">
+                {% if car.carousel_image %}
+                <div class="hero__slide-bg" style="background: url('/media/{{ car.carousel_image }}') center center / cover no-repeat;">
+                    <div class="hero__overlay"></div>
+                </div>
+                {% else %}
+                <div class="hero__slide-bg" style="background: linear-gradient(135deg, #222020 0%, #606060 100%);">
+                    <div class="hero__overlay"></div>
+                </div>
+                {% endif %}
+                <div class="container hero__content">
+                    <div class="hero__info">
+                        <span class="hero__badge">{{ car.brand }} {{ car.model }}</span>
+                        <h1 class="hero__title">{{ car.brand }} {{ car.model }}</h1>
+                        <p class="hero__subtitle">{{ car.description|truncatewords:25|default:"Экспертная консультация по этому автомобилю" }}</p>
+                        <div class="hero__specs">
+                            <div class="hero__spec">
+                                <i class="fas fa-tachometer-alt"></i>
+                                <span>{{ car.power }} л.с.</span>
+                            </div>
+                            <div class="hero__spec">
+                                <i class="fas fa-gas-pump"></i>
+                                <span>{{ car.get_fuel_display }}</span>
+                            </div>
+                            <div class="hero__spec">
+                                <i class="fas fa-cogs"></i>
+                                <span>{{ car.get_transmission_display }}</span>
+                            </div>
+                        </div>
+                        <div class="hero__actions">
+                            <a href="{% url 'car_detail' car.id %}" class="btn btn--primary btn--lg">Подробнее</a>
+                            <a href="{% url 'contacts' %}" class="btn btn--outline btn--lg">Получить консультацию</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        {% else %}
+            <div class="hero__slide active">
+                <div class="hero__slide-bg" style="background: linear-gradient(135deg, #222020 0%, #606060 100%);">
+                    <div class="hero__overlay"></div>
+                </div>
+                <div class="container hero__content">
+                    <div class="hero__info">
+                        {% if user.is_authenticated %}
+                        <span class="hero__badge">Добро пожаловать, {{ user.first_name|default:user.username }}!</span>
+                        {% else %}
+                        <span class="hero__badge">Консультационный центр</span>
+                        {% endif %}
+                        <h1 class="hero__title">Auto Premium</h1>
+                        <p class="hero__subtitle">Профессиональные консультации по выбору и обслуживанию автомобилей Toyota.</p>
+                        <div class="hero__actions">
+                            <a href="{% url 'models_list' %}" class="btn btn--primary btn--lg">Смотреть модели</a>
+                            <a href="{% url 'contacts' %}" class="btn btn--outline btn--lg">Получить консультацию</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+
+    <!-- Carousel Controls -->
+    <button class="hero__control hero__control--prev" id="heroPrev">
+        <i class="fas fa-chevron-left"></i>
+    </button>
+    <button class="hero__control hero__control--next" id="heroNext">
+        <i class="fas fa-chevron-right"></i>
+    </button>
+
+    <!-- Carousel Dots -->
+    <div class="hero__dots" id="heroDots">
+        {% for car in carousel_cars %}
+        <span class="hero__dot {% if forloop.first %}active{% endif %}" data-index="{{ forloop.counter0 }}"></span>
+        {% endfor %}
+    </div>
+</section>
+
+    <!-- CTA Section -->
+    <section class="cta section">
+        <div class="container">
+            <div class="cta__content">
+                <h2 class="cta__title">Нужна консультация?</h2>
+                <p class="cta__text">Оставьте заявку и наши эксперты свяжутся с вами для бесплатной консультации</p>
+                <a href="{% url 'contacts' %}" class="btn btn--primary btn--lg">Получить консультацию</a>
+            </div>
+        </div>
+    </section>
+{% endblock %}

@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Личный кабинет - Auto Premium{% endblock %}
+
+{% block content %}
+<section class="profile">
+    <div class="container">
+        <div class="profile__header">
+            <div class="profile__avatar">
+                {% if user.profile.avatar %}
+                <img src="{{ user.profile.avatar.url }}" alt="{{ user.username }}">
+                {% else %}
+                <i class="fas fa-user-circle"></i>
+                {% endif %}
+            </div>
+            <div class="profile__info">
+                <h1 class="profile__name">{{ user.first_name|default:user.username }}</h1>
+                <p class="profile__username">@{{ user.username }}</p>
+                <p class="profile__email">{{ user.email|default:"Email не указан" }}</p>
+            </div>
+            <a href="{% url 'profile_settings' %}" class="btn btn--outline">
+                <i class="fas fa-cog"></i> Настройки
+            </a>
+        </div>
+
+        <div class="profile__content">
+            <div class="profile__card">
+                <i class="fas fa-bell"></i>
+                <h3>Уведомления</h3>
+                <p>Просмотреть акции, бонусы и новости</p>
+                <a href="{% url 'notifications' %}" class="btn btn--primary btn--sm">Открыть</a>
+            </div>
+            <div class="profile__card">
+                <i class="fas fa-file-alt"></i>
+                <h3>Мои заявки</h3>
+                <p>История ваших заявок</p>
+            </div>
+            <div class="profile__card">
+                <i class="fas fa-heart"></i>
+                <h3>Избранное</h3>
+                <p>Понравившиеся автомобили</p>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

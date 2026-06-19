@@ -1,0 +1,141 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Автомобили в наличии - Auto Premium{% endblock %}
+
+<!-- ============================================================ -->
+<!-- КУДА ВСТАВЛЯТЬ ФОТО АВТОМОБИЛЕЙ:                            -->
+<!-- Создайте папку: media/cars/                                   -->
+<!-- Файлы именовать как:                                          -->
+<!--   media/cars/toyota_landcruiser300.jpg (Land Cruiser 300)     -->
+<!--   media/cars/toyota_gr86.jpg        (GR86)                    -->
+<!--   media/cars/toyota_crown.jpg       (Crown)                   -->
+<!--   media/cars/toyota_bz3x.jpg        (bZ3X)                    -->
+<!--   media/cars/toyota_hilux.jpg       (Hilux)                   -->
+<!--   media/cars/toyota_rav4.jpg        (RAV4)                    -->
+<!--   media/cars/toyota_raize.jpg       (Raize)                   -->
+<!--   media/cars/toyota_camry.jpg       (Camry)                   -->
+<!--   media/cars/toyota_corolla.jpg     (Corolla)                 -->
+<!--   media/cars/toyota_fortuner.jpg    (Fortuner)                -->
+
+
+{% block content %}
+<!-- ===================================================================== -->
+<!-- 📁 ФОТО ДЛЯ ЭТОЙ СТРАНИЦЫ (26 уникальных имён в media/cars/)         -->
+<!--                                                                       -->
+<!--   toyota_landcruiser300_1.jpg   toyota_landcruiser300_2.jpg   300_3   -->
+<!--   toyota_gr86_1.jpg             toyota_gr86_2.jpg                     -->
+<!--   toyota_crown_1.jpg            toyota_crown_2.jpg                    -->
+<!--   toyota_bz3x_1.jpg             toyota_bz3x_2.jpg                     -->
+<!--   toyota_hilux_1.jpg            toyota_hilux_2.jpg       hilux_3      -->
+<!--   toyota_rav4_1.jpg             toyota_rav4_2.jpg        rav4_3       -->
+<!--   toyota_raize_1.jpg            toyota_raize_2.jpg                    -->
+<!--   toyota_camry_1.jpg            toyota_camry_2.jpg       camry_3      -->
+<!--   toyota_corolla_1.jpg          toyota_corolla_2.jpg     corolla_3    -->
+<!--   toyota_fortuner_1.jpg         toyota_fortuner_2.jpg    fortuner_3   -->
+<!-- ===================================================================== -->
+<section class="page-header">
+    <div class="container">
+        <h1 class="page-header__title">Автомобили в наличии</h1>
+        <p class="page-header__subtitle">Выберите автомобиль из нашего каталога</p>
+    </div>
+</section>
+
+<section class="catalog section">
+    <div class="container">
+        <div class="catalog__layout">
+            <aside class="catalog__filter">
+                <form method="GET" class="filter">
+                    <h3 class="filter__title">Фильтр</h3>
+                    
+                    <div class="filter__group">
+                        <label class="filter__label">Марка</label>
+                        <select name="brand" class="filter__select">
+                            <option value="">Все марки</option>
+                            {% for brand in brands %}
+                            <option value="{{ brand }}" {% if current_filters.brand == brand %}selected{% endif %}>{{ brand }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <div class="filter__group">
+                        <label class="filter__label">Цена от</label>
+                        <input type="number" name="min_price" class="filter__input" placeholder="от" value="{{ current_filters.min_price }}">
+                    </div>
+
+                    <div class="filter__group">
+                        <label class="filter__label">Цена до</label>
+                        <input type="number" name="max_price" class="filter__input" placeholder="до" value="{{ current_filters.max_price }}">
+                    </div>
+
+                    <div class="filter__group">
+                        <label class="filter__label">Тип топлива</label>
+                        <select name="fuel" class="filter__select">
+                            <option value="">Все</option>
+                            <option value="gasoline" {% if current_filters.fuel == 'gasoline' %}selected{% endif %}>Бензин</option>
+                            <option value="diesel" {% if current_filters.fuel == 'diesel' %}selected{% endif %}>Дизель</option>
+                            <option value="hybrid" {% if current_filters.fuel == 'hybrid' %}selected{% endif %}>Гибрид</option>
+                            <option value="electric" {% if current_filters.fuel == 'electric' %}selected{% endif %}>Электро</option>
+                        </select>
+                    </div>
+
+                    <div class="filter__group">
+                        <label class="filter__label">КПП</label>
+                        <select name="transmission" class="filter__select">
+                            <option value="">Все</option>
+                            <option value="manual" {% if current_filters.transmission == 'manual' %}selected{% endif %}>Механика</option>
+                            <option value="automatic" {% if current_filters.transmission == 'automatic' %}selected{% endif %}>Автомат</option>
+                            <option value="robot" {% if current_filters.transmission == 'robot' %}selected{% endif %}>Робот</option>
+                            <option value="variator" {% if current_filters.transmission == 'variator' %}selected{% endif %}>Вариатор</option>
+                        </select>
+                    </div>
+
+                    <button type="submit" class="btn btn--primary filter__btn">Применить</button>
+                    <a href="{% url 'available_cars' %}" class="btn btn--outline filter__btn">Сбросить</a>
+                </form>
+            </aside>
+
+            <div class="catalog__main">
+                <div class="catalog__count">Найдено: {{ cars|length }} автомобилей</div>
+                <div class="cars-grid">
+                    {% for car in cars %}
+                    <div class="car-card">
+                        <div class="car-card__image">
+                            {% if car.main_image %}
+                            <img src="{{ car.main_image.url }}" alt="{{ car.brand }} {{ car.model }}">
+                            {% else %}
+                            <div class="car-card__placeholder">
+                                <i class="fas fa-car"></i>
+                            </div>
+                            {% endif %}
+                            {% if car.is_new %}
+                            <span class="car-card__badge">Новинка</span>
+                            {% endif %}
+                        </div>
+                        <div class="car-card__body">
+                            <h3 class="car-card__title">{{ car.brand }} {{ car.model }}</h3>
+                            <p class="car-card__year">{{ car.year }} год</p>
+                            <div class="car-card__specs">
+                                <span><i class="fas fa-tachometer-alt"></i> {{ car.power }} л.с.</span>
+                                <span><i class="fas fa-gas-pump"></i> {{ car.get_fuel_display }}</span>
+                                <span><i class="fas fa-cogs"></i> {{ car.get_transmission_display }}</span>
+                            </div>
+                            <div class="car-card__price">
+                                <span class="car-card__price-value">{{ car.price|floatformat:0 }} ₽</span>
+                            </div>
+                            <a href="{% url 'car_detail' car.id %}" class="btn btn--primary car-card__btn">Подробнее</a>
+                        </div>
+                    </div>
+                    {% empty %}
+                    <div class="cars-grid__empty">
+                        <i class="fas fa-search"></i>
+                        <h3>Автомобили не найдены</h3>
+                        <p>Попробуйте изменить параметры фильтра</p>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
